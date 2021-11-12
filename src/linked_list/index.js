@@ -27,6 +27,29 @@ class LinkedList {
 		return node;
 	}
 
+	deleteData(node){
+		this.count -= 1;
+
+		if(this.head.key === node.key){
+			this.head = node.next
+			this.head.prev = null
+			return;
+		}
+
+		if(this.tail.key === node.key){
+			this.tail = node.prev
+			this.tail.next  = null
+			return;
+		}
+
+		const prevNode = node.prev
+		const nextNode = node.next
+
+		prevNode.next = nextNode
+		nextNode.prev = prevNode
+
+	}
+
 	changeHead(node) {
 		if (this.head.key === node.key) return;
 

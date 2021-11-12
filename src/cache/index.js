@@ -13,7 +13,12 @@ class CacheLRU {
 			this.map.delete(this.list.tail.key);
 			this.list.trimTail();
 		}
-
+		// CHECK IF VALUE ALREADY EXISTS
+		if(this.map.has(key)){
+			const node = this.map.get(key)
+			this.map.delete(key)
+			this.list.deleteData(node)
+		}
 		const obj = this.list.addData(key, data);
 
 		this.map.set(key, obj);
