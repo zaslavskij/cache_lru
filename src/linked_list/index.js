@@ -11,10 +11,10 @@ class LinkedList {
 	constructor() {
 		this.head = null;
 		this.tail = null;
-		this.count = 0;
+		this.countItems = 0;
 	}
 	addData(key, data) {
-		this.count += 1;
+		this.countItems += 1;
 		const node = new Node(data, key, null, this.head);
 
 		if (!this.head) {
@@ -27,27 +27,26 @@ class LinkedList {
 		return node;
 	}
 
-	deleteData(node){
-		this.count -= 1;
+	deleteData(node) {
+		this.countItems -= 1;
 
-		if(this.head.key === node.key){
-			this.head = node.next
-			this.head.prev = null
+		if (this.head.key === node.key) {
+			this.head = node.next;
+			this.head.prev = null;
 			return;
 		}
 
-		if(this.tail.key === node.key){
-			this.tail = node.prev
-			this.tail.next  = null
+		if (this.tail.key === node.key) {
+			this.tail = node.prev;
+			this.tail.next = null;
 			return;
 		}
 
-		const prevNode = node.prev
-		const nextNode = node.next
+		const prevNode = node.prev;
+		const nextNode = node.next;
 
-		prevNode.next = nextNode
-		nextNode.prev = prevNode
-
+		prevNode.next = nextNode;
+		nextNode.prev = prevNode;
 	}
 
 	changeHead(node) {
@@ -67,7 +66,7 @@ class LinkedList {
 	}
 
 	trimTail() {
-		this.count -= 1;
+		this.countItems -= 1;
 		this.tail = this.tail.prev;
 		this.tail.next = null;
 	}

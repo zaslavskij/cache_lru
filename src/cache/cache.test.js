@@ -5,6 +5,7 @@ const obj2 = { propertyAtObject1: 'some 2 value' };
 const obj3 = { propertyAtObject1: 'some 3 value' };
 const obj4 = { propertyAtObject1: 'some 4 value' };
 const obj5 = { propertyAtObject1: 'some 5 value' };
+const obj6 = { propertyAtObject1: 'some 666 value' };
 
 test('Expect an instance  of Class', () => {
 	const cache = new CacheLRU();
@@ -29,7 +30,7 @@ test('Check cache length', () => {
 	cache.write('key4', obj4);
 	cache.write('key5', obj5);
 
-	expect(cache.list.count).toBe(5);
+	expect(cache.list.countItems).toBe(5);
 });
 
 test('Check head of list after read cache', () => {
@@ -68,9 +69,10 @@ test('Check cache limit', () => {
 	cache.write('key4', obj4);
 	cache.write('key5', obj5);
 
-	cache.read('key1');
+	cache.write('key5', obj6);
 
 	expect(cache.list.head.key).toBe('key5');
 	expect(cache.list.tail.key).toBe('key3');
-	expect(cache.list.count).toBe(limit);
+
+	expect(cache.list.countItems).toBe(limit);
 });

@@ -9,19 +9,21 @@ class CacheLRU {
 
 	write(key, data) {
 		const overflow = this.isOverflow();
-		if (overflow) {
-			this.map.delete(this.list.tail.key);
+		const isKeyExists = this.map.has(key);
+
+		if (overflow && !isKeyExists) {
+			this.map.delete(key);
 			this.list.trimTail();
 		}
-		// CHECK IF VALUE ALREADY EXISTS
-		if(this.map.has(key)){
-			const node = this.map.get(key)
-			this.map.delete(key)
-			this.list.deleteData(node)
-		}
-		const obj = this.list.addData(key, data);
 
-		this.map.set(key, obj);
+		if (this.map.has(key)) {
+			const node = this.map.get(key);
+			this.list.deleteData(node);
+			this.map.delete(key);
+		}
+
+		const node = this.list.addData(key, data);
+		this.map.set(key, node);
 	}
 
 	read(key) {
@@ -35,7 +37,7 @@ class CacheLRU {
 	}
 
 	isOverflow() {
-		return this.limit <= this.list.count;
+		return this.limit <= this.list.countItems;
 	}
 
 	clear() {
